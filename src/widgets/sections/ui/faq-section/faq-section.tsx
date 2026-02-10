@@ -1,5 +1,5 @@
-import React from 'react'
+import { FAQ } from '@/components/ui/faq-section'
 
 export const FaqSection = () => {
-    return <div>FaqSection</div>
+    return <FAQ />
 }

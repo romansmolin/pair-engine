@@ -14,7 +14,7 @@ const navigationMenu = [
 
 export const Header = () => {
     return (
-        <header className="container mx-auto p-4 mt-5 flex justify-between items-center">
+        <header className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
             <div>
                 <span className="text-2xl text-primary font-bold tracking-wider">Pairly</span>
             </div>

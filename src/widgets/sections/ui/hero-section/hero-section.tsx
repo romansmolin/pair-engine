@@ -14,26 +14,28 @@ const userAvatars = [
 
 export const HeroSection = () => {
     return (
-        <section className="py-10 mx-auto flex flex-col gap-10 items-center relative">
-            <Badge className="bg-transparent h-12 border-2 border-primary border-dashed text-primary font-bold text-xl">
-                ✨ Trusted by thousands of people looking for meaningful connections.
+        <section className="relative mx-auto flex min-h-[calc(100svh-5rem)] w-full max-w-7xl flex-col items-center justify-center gap-7 px-4 sm:gap-8 sm:px-6 lg:gap-10 lg:px-8">
+            <Badge className="h-auto  max-w-full bg-transparent px-3 py-2 text-center text-sm font-bold text-primary border-2 border-primary border-dashed sm:text-base md:text-lg lg:text-xl">
+                <span className="text-wrap">
+                    ✨ Trusted by people looking for real relationships, not endless swiping.
+                </span>
             </Badge>
 
-            <h1 className="text-7xl font-extrabold  max-w-6xl text-center leading-20 uppercase">
+            <h1 className="max-w-6xl text-center text-4xl font-extrabold uppercase leading-tight sm:text-5xl md:text-6xl lg:text-7xl lg:leading-[1.15]">
                 Find someone who actually{' '}
                 <span className="italic text-primary">fits your life</span>.
             </h1>
-            <p className="text-2xl text-center max-w-4xl leading-10">
-                Pairly helps you connect with people through shared values, habits, and real
-                compatibility, not endless swiping.
+            <p className="max-w-4xl text-center text-base leading-7 sm:text-lg sm:leading-8 md:text-xl md:leading-9 lg:text-2xl lg:leading-10">
+                Pairly is a dating app built around values, habits, and emotional compatibility
+                so meaningful conversations start naturally.
             </p>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
                 <div className="flex -space-x-3">
                     {userAvatars.map((avatar, idx) => (
                         <div
                             key={idx}
-                            className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 overflow-hidden"
+                            className="h-8 w-8 overflow-hidden rounded-full border-2 border-white bg-slate-100 sm:h-10 sm:w-10"
                         >
                             <Image
                                 width={200}
@@ -46,24 +48,24 @@ export const HeroSection = () => {
                         </div>
                     ))}
                 </div>
-                <h3 className="italic text-primary text-xl font-extrabold">
-                    Join 500+ early Pairly users
-                </h3>{' '}
+                <h3 className="text-center text-lg font-extrabold italic text-primary sm:text-left sm:text-xl">
+                    Join 500+ early Pairly members
+                </h3>
             </div>
-            <div className="flex gap-3">
-                <Button className="h-14 text-lg flex gap-3">
-                    Get started <Rocket className="size-6" />
+            <div className="flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
+                <Button className="flex h-12 w-full items-center justify-center gap-3 text-base sm:h-14 sm:w-auto sm:text-lg">
+                    Start matching <Rocket className="size-6" />
                 </Button>
                 <Button
-                    className="h-14  border-2 border-dashed text-lg flex gap-3"
+                    className="flex h-12 w-full items-center justify-center gap-3 border-2 border-dashed text-base sm:h-14 sm:w-auto sm:text-lg"
                     variant={'outline'}
                 >
-                    See how Pairly works <ArrowBigDown className="size-6" />
+                    How Pairly works <ArrowBigDown className="size-6" />
                 </Button>
             </div>
 
-            <div className="absolute rounded-full size-90 bg-primary -z-50 blur-[110px] -right-72 bottom-0" />
-            <div className="absolute rounded-full size-90 bg-primary -z-50 blur-[110px] -left-70" />
+            <div className="absolute -right-24 -bottom-6 -z-50 h-56 w-56 rounded-full bg-primary/70 blur-[90px] sm:-right-36 sm:h-72 sm:w-72 lg:-right-56 lg:bottom-0 lg:h-96 lg:w-96 lg:blur-[110px]" />
+            <div className="absolute -left-24 top-26 -z-50 h-56 w-56 rounded-full bg-primary/70 blur-[90px] sm:-left-36 sm:h-72 sm:w-72 lg:-left-56 lg:h-96 lg:w-96 lg:blur-[110px]" />
         </section>
     )
 }

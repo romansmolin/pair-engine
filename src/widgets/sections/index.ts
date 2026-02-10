@@ -1,4 +1,5 @@
 export { BenefitsSection } from './ui/benefits-section/benefits-section'
+export { ContentSection } from './ui/content-section/content-section'
 export { CtaSection } from './ui/cta-section/cta-section'
 export { FaqSection } from './ui/faq-section/faq-section'
 export { HeroSection } from './ui/hero-section/hero-section'
