@@ -13,6 +13,7 @@ export class GetCurrentUserController {
     ) {}
 
     async handle(_req: NextRequest): Promise<NextResponse> {
+        void _req
         const session = await getSession()
 
         if (!session?.user?.id) throw AppError.authenticationError()

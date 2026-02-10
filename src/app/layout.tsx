@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Header } from '@/widgets/header'
+import { Providers } from './providers'
+import { Toaster } from '@/shared/ui/toaster'
 
 export const metadata: Metadata = {
     title: 'Pairly | Dating app for meaningful relationships',
@@ -16,10 +18,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`antialiased w-svw min-h-svh overflow-x-hidden flex flex-col`}>
-                <Header />
-                <main className="flex flex-1 flex-col space-y-12 sm:space-y-16 lg:space-y-28">
-                    {children}
-                </main>
+                <Providers>
+                    <Header />
+                    <main className="flex flex-1 flex-col space-y-12 sm:space-y-16 lg:space-y-20">
+                        {children}
+                    </main>
+                    <Toaster />
+                </Providers>
             </body>
         </html>
     )

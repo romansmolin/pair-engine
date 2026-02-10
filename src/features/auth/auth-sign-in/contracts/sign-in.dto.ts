@@ -1,15 +1,12 @@
-import { z } from 'zod';
-import { emailSchema } from '@/shared/lib/validation/common-schemas';
+import { z } from 'zod'
 
-/**
- * Sign in request schema
- */
 export const signInSchema = z.object({
-  email: emailSchema,
-  password: z.string().min(1, 'Password is required'),
-  consent: z.boolean().refine((value) => value, {
-    message: 'Consent is required',
-  }),
-});
+    username: z.string().trim().min(1, 'Username is required'),
+    password: z.string().min(1, 'Password is required'),
+    rememberMe: z.boolean(),
+    consentAccepted: z.boolean().refine((value) => value, {
+        message: 'Consent is required',
+    }),
+})
 
-export type SignInDto = z.infer<typeof signInSchema>;
+export type SignInDto = z.infer<typeof signInSchema>

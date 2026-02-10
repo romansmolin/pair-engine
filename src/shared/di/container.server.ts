@@ -24,6 +24,7 @@ import { UpdatePaymentFromReturnUseCase } from '@/entities/payment/api/server/us
 import { HandlePaymentWebhookUseCase } from '@/entities/payment/api/server/use-cases/handle-payment-webhook.usecase'
 import { SecureProcessorReturnController } from '@/entities/payment/api/server/controller/secure-processor-return.controller'
 import { SecureProcessorWebhookController } from '@/entities/payment/api/server/controller/secure-processor-webhook.controller'
+import { DashboardController, DashboardRepository, DashboardService } from '@/entities/dashboard'
 
 export const container = new Container({
     defaultScope: 'Singleton',
@@ -54,6 +55,11 @@ export function initializeContainer(): void {
     container.bind(HandlePaymentWebhookUseCase).toSelf()
     container.bind(SecureProcessorReturnController).toSelf()
     container.bind(SecureProcessorWebhookController).toSelf()
+
+    // Dashboard entity bindings
+    container.bind(DashboardRepository).toSelf()
+    container.bind(DashboardService).toSelf()
+    container.bind(DashboardController).toSelf()
 }
 
 // Initialize container on module load

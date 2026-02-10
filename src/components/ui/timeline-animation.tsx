@@ -34,7 +34,7 @@ export function TimelineContent<T extends TimelineTag = "div">({
   ...props
 }: TimelineContentProps<T>) {
   const isInView = useInView(timelineRef, { once: true, amount: 0.25 })
-  const MotionComponent = motionComponents[as]
+  const MotionComponent = motionComponents[as] as React.ElementType
 
   return (
     <MotionComponent
@@ -43,7 +43,7 @@ export function TimelineContent<T extends TimelineTag = "div">({
       animate={isInView ? "visible" : "hidden"}
       custom={animationNum}
       className={className}
-      {...props}
+      {...(props as Record<string, unknown>)}
     >
       {children}
     </MotionComponent>

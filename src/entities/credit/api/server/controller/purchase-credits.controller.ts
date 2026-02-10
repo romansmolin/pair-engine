@@ -17,7 +17,7 @@ export class PurchaseCreditsController {
 
         try {
             body = await req.json()
-        } catch (error) {
+        } catch {
             throw AppError.validationError('Invalid JSON payload')
         }
 

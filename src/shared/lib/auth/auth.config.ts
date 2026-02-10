@@ -20,13 +20,13 @@ export const auth = betterAuth({
         enabled: true,
         requireEmailVerification: false,
     },
-    socialProviders: {
-        google: {
-            clientId: getEnvVar('GOOGLE_CLIENT_ID'),
-            clientSecret: getEnvVar('GOOGLE_CLIENT_SECRET'),
-            enabled: Boolean(getEnvVar('GOOGLE_CLIENT_ID') && getEnvVar('GOOGLE_CLIENT_SECRET')),
-        },
-    },
+    // socialProviders: {
+    //     google: {
+    //         clientId: getEnvVar('GOOGLE_CLIENT_ID'),
+    //         clientSecret: getEnvVar('GOOGLE_CLIENT_SECRET'),
+    //         enabled: Boolean(getEnvVar('GOOGLE_CLIENT_ID') && getEnvVar('GOOGLE_CLIENT_SECRET')),
+    //     },
+    // },
     session: {
         expiresIn: 60 * 60 * 24 * 7, // 7 days
         updateAge: 60 * 60 * 24, // 1 day

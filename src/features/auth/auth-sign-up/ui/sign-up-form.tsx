@@ -1,22 +1,23 @@
 'use client'
 
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { Loader2, UserPlus } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { useSignUpMutation } from '../api/client/endpoints'
 import { SignUpDto, signUpSchema } from '@/features/auth/auth-sign-up/contracts/sign-up.dto'
 import { normalizeError } from '@/shared/api/client/error-normalizer'
-import { Alert } from '@/shared/ui/alert'
 import { Button } from '@/shared/ui/button'
+import { Checkbox } from '@/shared/ui/checkbox'
 import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
 
 export function SignUpForm() {
     const router = useRouter()
     const [signUp, { isLoading }] = useSignUpMutation()
-    const [error, setError] = useState<string | null>(null)
 
     const {
         register,
@@ -25,41 +26,80 @@ export function SignUpForm() {
     } = useForm<SignUpDto>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
-            consent: false,
+            username: '',
+            password: '',
+            email: '',
+            gender: 'man',
+            lookingFor: 'women',
+            dateOfBirth: '',
+            city: '',
+            consentAccepted: false,
         },
     })
 
     const onSubmit = async (data: SignUpDto) => {
+        if (
+            !data.username.trim() ||
+            !data.password ||
+            !data.email ||
+            !data.gender ||
+            !data.lookingFor ||
+            !data.dateOfBirth
+        ) {
+            toast.error('Please fill all required fields')
+            return
+        }
+
+        if (!data.consentAccepted) {
+            toast.error('You must accept terms to continue')
+            return
+        }
+
         try {
-            setError(null)
             await signUp(data).unwrap()
-            router.push('/pdf-insights')
+            toast.success('Account created successfully')
+            router.push('/dashboard')
         } catch (err) {
             const normalized = normalizeError(err)
-            setError(normalized.message)
+            toast.error(normalized.message || 'Sign up failed')
         }
     }
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" data-testid="sign-up-form">
-            {error && (
-                <Alert variant="destructive" data-testid="error-message">
-                    {error}
-                </Alert>
-            )}
+    const onInvalid = () => {
+        if (errors.consentAccepted) {
+            toast.error('You must accept terms to continue')
+            return
+        }
 
+        const firstError = Object.values(errors)[0]
+        if (firstError?.message) {
+            toast.error(firstError.message as string)
+            return
+        }
+
+        toast.error('Please fill all required fields')
+    }
+
+    return (
+        <form
+            onSubmit={handleSubmit(onSubmit, onInvalid)}
+            className="space-y-4"
+            data-testid="sign-up-form"
+        >
             <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
-                    id="name"
+                    id="username"
                     type="text"
-                    placeholder="John Doe"
-                    {...register('name')}
-                    data-testid="name-input"
+                    required
+                    autoComplete="username"
+                    placeholder="john_doe"
+                    {...register('username')}
+                    data-testid="username-input"
                 />
-                {errors.name && (
-                    <p className="text-sm text-destructive" data-testid="name-error">
-                        {errors.name.message}
+                {errors.username && (
+                    <p className="text-sm text-destructive" data-testid="username-error">
+                        {errors.username.message}
                     </p>
                 )}
             </div>
@@ -69,6 +109,8 @@ export function SignUpForm() {
                 <Input
                     id="email"
                     type="email"
+                    required
+                    autoComplete="email"
                     placeholder="john@example.com"
                     {...register('email')}
                     data-testid="email-input"
@@ -85,6 +127,7 @@ export function SignUpForm() {
                 <Input
                     id="password"
                     type="password"
+                    required
                     placeholder="••••••••"
                     {...register('password')}
                     data-testid="password-input"
@@ -97,70 +140,122 @@ export function SignUpForm() {
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="gender">Gender</Label>
+                <select
+                    id="gender"
+                    {...register('gender')}
+                    className="border-input bg-background focus-visible:ring-ring/50 focus-visible:border-ring h-9 w-full rounded-md border px-3 text-sm outline-none focus-visible:ring-[3px]"
+                    data-testid="gender-select"
+                >
+                    <option value="man">Man</option>
+                    <option value="woman">Woman</option>
+                    <option value="non_binary">Non-binary</option>
+                    <option value="other">Other</option>
+                </select>
+                {errors.gender && (
+                    <p className="text-sm text-destructive" data-testid="gender-error">
+                        {errors.gender.message}
+                    </p>
+                )}
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="lookingFor">Looking for</Label>
+                <select
+                    id="lookingFor"
+                    {...register('lookingFor')}
+                    className="border-input bg-background focus-visible:ring-ring/50 focus-visible:border-ring h-9 w-full rounded-md border px-3 text-sm outline-none focus-visible:ring-[3px]"
+                    data-testid="looking-for-select"
+                >
+                    <option value="man">Man</option>
+                    <option value="women">Women</option>
+                    <option value="couple">Couple</option>
+                    <option value="other">Other</option>
+                </select>
+                {errors.lookingFor && (
+                    <p className="text-sm text-destructive" data-testid="looking-for-error">
+                        {errors.lookingFor.message}
+                    </p>
+                )}
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="dateOfBirth">Date of birth</Label>
                 <Input
-                    id="confirmPassword"
-                    type="password"
-                    placeholder="••••••••"
-                    {...register('confirmPassword')}
-                    data-testid="confirm-password-input"
+                    id="dateOfBirth"
+                    type="date"
+                    required
+                    {...register('dateOfBirth')}
+                    data-testid="date-of-birth-input"
                 />
-                {errors.confirmPassword && (
-                    <p className="text-sm text-destructive" data-testid="confirm-password-error">
-                        {errors.confirmPassword.message}
+                {errors.dateOfBirth && (
+                    <p className="text-sm text-destructive" data-testid="date-of-birth-error">
+                        {errors.dateOfBirth.message}
+                    </p>
+                )}
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="city">City ID (optional)</Label>
+                <Input
+                    id="city"
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="123"
+                    {...register('city')}
+                    data-testid="city-input"
+                />
+                {errors.city && (
+                    <p className="text-sm text-destructive" data-testid="city-error">
+                        {errors.city.message}
                     </p>
                 )}
             </div>
 
             <div className="space-y-2">
                 <div className="flex items-start gap-2">
-                    <input
-                        id="consent"
-                        type="checkbox"
-                        className="mt-1 h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
-                        {...register('consent')}
+                    <Checkbox
+                        id="consentAccepted"
+                        className="mt-0.5"
+                        {...register('consentAccepted')}
                         data-testid="sign-up-consent-checkbox"
                     />
-                    <Label
-                        htmlFor="consent"
-                        className="text-sm font-normal leading-snug text-slate-600"
-                    >
-                        I agree to the{' '}
-                        <a
-                            href="/terms-of-service"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:text-slate-900"
-                            data-testid="sign-up-terms-link"
+                    <div className="w-full overflow-x-auto">
+                        <Label
+                            htmlFor="consentAccepted"
+                            className="inline-flex min-w-max items-center gap-1 whitespace-nowrap text-sm font-normal text-slate-600"
                         >
-                            Terms of Service
-                        </a>
-                        ,{' '}
-                        <a
-                            href="/privacy-policy"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:text-slate-900"
-                            data-testid="sign-up-privacy-link"
-                        >
-                            Privacy Policy
-                        </a>
-                        , and{' '}
-                        <a
-                            href="/return-policy"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:text-slate-900"
-                            data-testid="sign-up-return-link"
-                        >
-                            Return Policy
-                        </a>
-                        .
-                    </Label>
+                            <span>I agree to the</span>
+                            <Link
+                                href="/terms-of-service"
+                                className="underline hover:text-slate-900"
+                                data-testid="sign-up-terms-link"
+                            >
+                                Terms of Service
+                            </Link>
+                            <span>,</span>
+                            <Link
+                                href="/privacy-policy"
+                                className="underline hover:text-slate-900"
+                                data-testid="sign-up-privacy-link"
+                            >
+                                Privacy Policy
+                            </Link>
+                            <span>, and</span>
+                            <Link
+                                href="/return-policy"
+                                className="underline hover:text-slate-900"
+                                data-testid="sign-up-return-link"
+                            >
+                                Return Policy
+                            </Link>
+                            <span>.</span>
+                        </Label>
+                    </div>
                 </div>
-                {errors.consent && (
+                {errors.consentAccepted && (
                     <p className="text-sm text-destructive" data-testid="sign-up-consent-error">
-                        {errors.consent.message}
+                        {errors.consentAccepted.message}
                     </p>
                 )}
             </div>
@@ -171,7 +266,17 @@ export function SignUpForm() {
                 disabled={isLoading}
                 data-testid="submit-button"
             >
-                {isLoading ? 'Creating account...' : 'Create account'}
+                {isLoading ? (
+                    <>
+                        <Loader2 className="size-4 animate-spin" />
+                        Creating account...
+                    </>
+                ) : (
+                    <>
+                        <UserPlus className="size-4" />
+                        Create account
+                    </>
+                )}
             </Button>
         </form>
     )

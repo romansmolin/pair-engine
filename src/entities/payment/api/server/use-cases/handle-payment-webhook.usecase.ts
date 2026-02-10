@@ -68,7 +68,7 @@ export class HandlePaymentWebhookUseCase {
 
         try {
             payload = JSON.parse(input.rawBody) as WebhookPayload
-        } catch (error) {
+        } catch {
             throw AppError.validationError('Invalid webhook payload')
         }
 
