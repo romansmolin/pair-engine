@@ -1,4 +1,5 @@
 import { cn } from '@/shared/lib/css/utils'
+import Image from 'next/image'
 
 const defaultSteps = [
     {
@@ -71,50 +72,14 @@ export function HowItWorksSection() {
 
                     {/* Center Column - Visual */}
                     <div className="shrink-0 w-full md:w-auto">
-                        <div className="w-full md:w-70 lg:w-[320px] xl:w-90 aspect-3/4 rounded-3xl overflow-hidden shadow-2xl mx-auto">
-                            <div className="w-full h-full bg-linear-to-br from-slate-50 to-slate-200 p-6 flex flex-col">
-                                <div className="flex items-center justify-between">
-                                    <div className="text-xs uppercase tracking-wide text-slate-500">
-                                        Dating Insights
-                                    </div>
-                                    <div className="text-[10px] px-2 py-1 rounded-full bg-white text-slate-600 shadow-sm border border-slate-200">
-                                        Live
-                                    </div>
-                                </div>
-
-                                <div className="mt-6 rounded-2xl bg-white border border-slate-200 p-4 shadow-sm">
-                                    <div className="text-xs text-slate-500">Compatibility score</div>
-                                    <div className="mt-2 text-3xl font-bold text-slate-900">
-                                        92%
-                                    </div>
-                                    <div className="mt-3 h-2 rounded-full bg-slate-100">
-                                        <div className="h-2 w-4/5 rounded-full bg-primary/60" />
-                                    </div>
-                                </div>
-
-                                <div className="mt-4 grid grid-cols-2 gap-3">
-                                    <div className="rounded-2xl bg-white border border-slate-200 p-3">
-                                        <div className="text-[10px] text-slate-500">Shared values</div>
-                                        <div className="text-lg font-bold text-slate-900">6</div>
-                                    </div>
-                                    <div className="rounded-2xl bg-white border border-slate-200 p-3">
-                                        <div className="text-[10px] text-slate-500">Green flags</div>
-                                        <div className="text-lg font-bold text-slate-900">4</div>
-                                    </div>
-                                </div>
-
-                                <div className="mt-auto rounded-2xl bg-white border border-slate-200 p-4">
-                                    <div className="flex items-center justify-between text-xs text-slate-500">
-                                        <span>Match quality</span>
-                                        <span className="text-emerald-600 font-semibold">98%</span>
-                                    </div>
-                                    <div className="mt-3 space-y-2">
-                                        <div className="h-2 w-5/6 rounded-full bg-slate-200" />
-                                        <div className="h-2 w-2/3 rounded-full bg-slate-200" />
-                                        <div className="h-2 w-1/2 rounded-full bg-slate-200" />
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="relative w-full md:w-70 lg:w-[320px] xl:w-90 aspect-3/4 rounded-3xl overflow-hidden shadow-2xl mx-auto">
+                            <Image
+                                src="/assets/Gemini_Generated_Image_i509epi509epi509.png"
+                                alt="Pairly matching preview"
+                                fill
+                                className="object-cover"
+                                priority={false}
+                            />
                         </div>
                     </div>
 

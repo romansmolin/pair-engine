@@ -1,17 +1,16 @@
 import 'server-only'
 
 import { injectable } from 'inversify'
-import type { gift_catalog, gift_inventory, gift_send } from '@prisma/client'
 import { AppError } from '@/shared/errors/app-error'
 import { prisma } from '@/shared/lib/database/prisma'
 
-export type GiftSendHistoryRow = gift_send & {
-    gift: gift_catalog
-}
+type GiftCatalogRow = Awaited<ReturnType<typeof prisma.gift_catalog.findMany>>[number]
+type GiftSendRow = Awaited<ReturnType<typeof prisma.gift_send.findMany>>[number]
+type GiftInventoryBaseRow = Awaited<ReturnType<typeof prisma.gift_inventory.findMany>>[number]
 
-export type GiftInventoryRow = gift_inventory & {
-    gift: gift_catalog
-}
+export type GiftSendHistoryRow = GiftSendRow & { gift: GiftCatalogRow }
+
+export type GiftInventoryRow = GiftInventoryBaseRow & { gift: GiftCatalogRow }
 
 export type BuyGiftTransactionalInput = {
     userId: string
@@ -33,13 +32,13 @@ export type SendGiftTransactionalInput = {
 }
 
 export type SendGiftTransactionalResult = {
-    giftSend: gift_send
+    giftSend: GiftSendRow
     remainingInventory: number
 }
 
 @injectable()
 export class GiftRepository {
-    async listCatalog(): Promise<gift_catalog[]> {
+    async listCatalog(): Promise<GiftCatalogRow[]> {
         return prisma.gift_catalog.findMany({
             where: {
                 isActive: true,
@@ -48,7 +47,7 @@ export class GiftRepository {
         })
     }
 
-    async findGiftById(giftId: string): Promise<gift_catalog | null> {
+    async findGiftById(giftId: string): Promise<GiftCatalogRow | null> {
         return prisma.gift_catalog.findUnique({
             where: { id: giftId },
         })

@@ -1,6 +1,5 @@
 import { injectable } from 'inversify'
-import type { InputJsonValue } from '@prisma/client/runtime/client'
-import type { payment_token } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { prisma } from '@/shared/lib/database/prisma'
 import type { IPaymentTokenRepository } from '../interfaces/payment-token-repository.interface'
 import type {
@@ -9,9 +8,11 @@ import type {
     UpdatePaymentTokenInput,
 } from '../../../model/types'
 
-const toJsonValue = (value: unknown | null | undefined): InputJsonValue | undefined => {
+type PaymentTokenRow = NonNullable<Awaited<ReturnType<typeof prisma.payment_token.findUnique>>>
+
+const toJsonValue = (value: unknown | null | undefined): Prisma.InputJsonValue | undefined => {
     if (value === undefined || value === null) return undefined
-    return value as InputJsonValue
+    return value as Prisma.InputJsonValue
 }
 
 @injectable()
@@ -66,7 +67,7 @@ export class PrismaPaymentTokenRepository implements IPaymentTokenRepository {
         return token ? this.mapToPaymentToken(token) : null
     }
 
-    private mapToPaymentToken(data: payment_token): PaymentToken {
+    private mapToPaymentToken(data: PaymentTokenRow): PaymentToken {
         return {
             id: data.id,
             userId: data.userId,

@@ -1,8 +1,12 @@
 import { injectable } from 'inversify'
-import type { credit_transaction, user_credits } from '@prisma/client'
 import { prisma } from '@/shared/lib/database/prisma'
 import { ICreditRepository } from '../interfaces/credit-repository.interface'
 import type { UserCredits, CreditTransaction, CreateTransactionInput } from '../../../model/types'
+
+type UserCreditsRow = NonNullable<Awaited<ReturnType<typeof prisma.user_credits.findUnique>>>
+type CreditTransactionRow = NonNullable<
+    Awaited<ReturnType<typeof prisma.credit_transaction.findUnique>>
+>
 
 @injectable()
 export class PrismaCreditRepository implements ICreditRepository {
@@ -91,7 +95,7 @@ export class PrismaCreditRepository implements ICreditRepository {
         return this.mapToTransaction(transaction)
     }
 
-    private mapToUserCredits(data: user_credits): UserCredits {
+    private mapToUserCredits(data: UserCreditsRow): UserCredits {
         return {
             id: data.id,
             userId: data.userId,
@@ -101,7 +105,7 @@ export class PrismaCreditRepository implements ICreditRepository {
         }
     }
 
-    private mapToTransaction(data: credit_transaction): CreditTransaction {
+    private mapToTransaction(data: CreditTransactionRow): CreditTransaction {
         return {
             id: data.id,
             userId: data.userId,
