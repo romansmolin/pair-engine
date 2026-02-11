@@ -5,19 +5,18 @@ import { SheetTrigger, SheetContent, SheetHeader, SheetTitle, Sheet } from '@/sh
 import { Separator } from '@/shared/ui/separator'
 
 const navigationMenu = [
-    { label: 'How it works', href: '#how-it-works' },
-    { label: 'Safety', href: '#safety' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Stories', href: '#stories' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'How it works', href: '/#how-it-works' },
+    { label: 'Safety', href: '/#safety' },
+    { label: 'Stories', href: '/#testimonials' },
+    { label: 'FAQ', href: '/#faq' },
 ]
 
 export const Header = () => {
     return (
         <header className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
-            <div>
-                <span className="text-2xl text-primary font-bold tracking-wider">Pairly</span>
-            </div>
+            <Link href="/" className="text-2xl text-primary font-bold tracking-wider">
+                Pairly
+            </Link>
             <nav className="hidden sm:block">
                 <ul className="flex gap-8 text-lg">
                     {navigationMenu.map((menuItem) => (
@@ -32,8 +31,12 @@ export const Header = () => {
                 </ul>
             </nav>
             <div className="hidden sm:flex gap-3">
-                <Button>Sign Up</Button>
-                <Button variant={'outline'}>Get started</Button>
+                <Button asChild>
+                    <Link href="/auth/sign-up">Sign Up</Link>
+                </Button>
+                <Button asChild variant={'outline'}>
+                    <Link href="/auth/sign-in">Get started</Link>
+                </Button>
             </div>
 
             {/* MOBILE VIEW */}
@@ -68,9 +71,11 @@ export const Header = () => {
                     <Separator className="bg-primary" />
 
                     <div className="flex gap-3 p-4">
-                        <Button className="flex-1">Sign Up</Button>
-                        <Button className="flex-1" variant={'outline'}>
-                            Get started
+                        <Button asChild className="flex-1">
+                            <Link href="/auth/sign-up">Sign Up</Link>
+                        </Button>
+                        <Button asChild className="flex-1" variant={'outline'}>
+                            <Link href="/auth/sign-in">Get started</Link>
                         </Button>
                     </div>
                 </SheetContent>

@@ -39,7 +39,7 @@ const benefits = [
 
 export const BenefitsSection = () => {
     return (
-        <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8" id="safety">
             <div className="mb-8 flex flex-col gap-3 sm:mb-10">
                 <h2 className="text-3xl font-extrabold uppercase leading-tight sm:text-4xl lg:text-5xl">
                     Why people choose <span className="text-primary">Pairly</span>

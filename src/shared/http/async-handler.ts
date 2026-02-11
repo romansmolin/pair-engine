@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { AppError } from '../errors/app-error'
 import { ErrorCode } from '../errors/error-codes'
+import { clearSessionCookies } from '../lib/auth/session-cookies'
 
 type AsyncRouteHandler = (
     req: NextRequest,
@@ -15,7 +16,7 @@ export function asyncHandler(handler: AsyncRouteHandler): AsyncRouteHandler {
             console.error('[API Error]', error)
 
             if (error instanceof AppError) {
-                return NextResponse.json(
+                const response = NextResponse.json(
                     {
                         error: {
                             code: error.code,
@@ -25,6 +26,12 @@ export function asyncHandler(handler: AsyncRouteHandler): AsyncRouteHandler {
                     },
                     { status: error.statusCode },
                 )
+
+                if (error.code === ErrorCode.AUTH_REQUIRED) {
+                    clearSessionCookies(response)
+                }
+
+                return response
             }
 
             return NextResponse.json(

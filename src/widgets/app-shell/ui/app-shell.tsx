@@ -42,7 +42,7 @@ export function AppShell({ children }: AppShellProps) {
                                 <SheetHeader className="p-0">
                                     <SheetTitle>App Navigation</SheetTitle>
                                     <SheetDescription>
-                                        Open dashboard, start matching, manage your wallet, or send gifts.
+                                        Open dashboard, start matching, chat, edit your profile, manage your wallet, or send gifts.
                                     </SheetDescription>
                                 </SheetHeader>
                                 <Separator className="my-4" />

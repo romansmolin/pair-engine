@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Loader2, LogIn } from 'lucide-react'
 import { toast } from 'sonner'
@@ -17,6 +17,7 @@ import { Label } from '@/shared/ui/label'
 
 export function SignInForm() {
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [signIn, { isLoading }] = useSignInMutation()
 
     const {
@@ -47,7 +48,8 @@ export function SignInForm() {
         try {
             await signIn(data).unwrap()
             toast.success('Signed in successfully')
-            router.push('/dashboard')
+            const next = searchParams.get('next')
+            router.push(next && next.startsWith('/') ? next : '/dashboard')
         } catch (err) {
             const normalized = normalizeError(err)
             toast.error(normalized.message || 'Sign in failed')

@@ -1,5 +1,6 @@
 import { ArrowRightIcon, PlusIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export function CallToAction() {
     return (
@@ -27,15 +28,20 @@ export function CallToAction() {
             <div className="-z-10 absolute top-0 left-1/2 h-full border-l border-dashed" />
 
             <div className="space-y-1">
-                <h2 className="text-center text-2xl font-bold">Let your plans shape the future.</h2>
+                <h2 className="text-center text-2xl font-bold">
+                    Ready to start real conversations?
+                </h2>
                 <p className="text-muted-foreground text-center">
-                    Start your free trial today. No credit card required.
+                    Create your Pairly profile, discover compatible matches, and connect with
+                    people who share your goals.
                 </p>
             </div>
 
             <div className="flex items-center justify-center gap-2">
-                <Button>
-                    Get Started <ArrowRightIcon className="ml-1 size-4" />
+                <Button asChild>
+                    <Link href="/auth/sign-up">
+                        Create free account <ArrowRightIcon className="ml-1 size-4" />
+                    </Link>
                 </Button>
             </div>
         </div>

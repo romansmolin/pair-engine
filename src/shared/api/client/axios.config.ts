@@ -22,10 +22,18 @@ apiClient.interceptors.response.use(
         return response
     },
     (error) => {
-        // Handle 401 errors globally if needed
         if (error.response?.status === 401) {
-            // Could redirect to login or dispatch an action
-            console.warn('[API] Unauthorized request')
+            const code = error.response?.data?.error?.code
+            const shouldRedirectToSignIn =
+                typeof window !== 'undefined' &&
+                code === 'AUTH_REQUIRED' &&
+                !window.location.pathname.startsWith('/auth/sign-in')
+
+            if (shouldRedirectToSignIn) {
+                const next = `${window.location.pathname}${window.location.search}`
+                const encodedNext = encodeURIComponent(next)
+                window.location.assign(`/auth/sign-in?reason=session-expired&next=${encodedNext}`)
+            }
         }
         return Promise.reject(error)
     },

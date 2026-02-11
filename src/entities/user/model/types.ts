@@ -24,3 +24,67 @@ export interface UpdateUserInput {
   emailVerified?: boolean
   image?: string
 }
+
+export type UserGender = 'man' | 'woman' | 'couple'
+
+export interface UserProfilePhoto {
+  large?: string
+  medium?: string
+  small?: string
+}
+
+export interface UserProfile {
+  id: number
+  username: string
+  fullName?: string
+  age?: number
+  gender?: UserGender
+  location?: string
+  email?: string
+  lastVisit?: string
+  avatarUrl?: string
+  photos?: UserProfilePhoto[]
+  photoCount?: number
+  description?: string
+  height?: number
+  weight?: number
+  eyeColor?: number
+  hairColor?: number
+  situation?: number
+  silhouette?: number
+  personality?: number
+  schedule?: number
+  orientation?: number
+  children?: number
+  education?: number
+  profession?: number
+}
+
+export interface UserProfileResponse {
+  user: UserProfile
+}
+
+export interface UpdateProfileRequest {
+  fullName: string
+  height?: number
+  weight?: number
+  eyeColor?: number
+  hairColor?: number
+  situation?: number
+  silhouette?: number
+  personality?: number
+  schedule?: number
+  orientation?: number
+  children?: number
+  education?: number
+  profession?: number
+  email?: string
+  langUi?: string
+  bodyOptions?: number[]
+  description?: string
+}
+
+export interface UpdateProfileResponse {
+  accepted?: number
+  error?: string
+}

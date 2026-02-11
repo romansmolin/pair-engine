@@ -2,6 +2,7 @@ import { Badge } from '@/shared/ui/badge'
 import { Button } from '@/shared/ui/button'
 import { ArrowBigDown, Rocket } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const userAvatars = [
     'https://api.dicebear.com/7.x/avataaars/png?seed=Reader1',
@@ -53,14 +54,22 @@ export const HeroSection = () => {
                 </h3>
             </div>
             <div className="flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
-                <Button className="flex h-12 w-full items-center justify-center gap-3 text-base sm:h-14 sm:w-auto sm:text-lg">
-                    Start matching <Rocket className="size-6" />
+                <Button
+                    asChild
+                    className="flex h-12 w-full items-center justify-center gap-3 text-base sm:h-14 sm:w-auto sm:text-lg"
+                >
+                    <Link href="/auth/sign-up">
+                        Start matching <Rocket className="size-6" />
+                    </Link>
                 </Button>
                 <Button
+                    asChild
                     className="flex h-12 w-full items-center justify-center gap-3 border-2 border-dashed text-base sm:h-14 sm:w-auto sm:text-lg"
                     variant={'outline'}
                 >
-                    How Pairly works <ArrowBigDown className="size-6" />
+                    <Link href="/#how-it-works">
+                        How Pairly works <ArrowBigDown className="size-6" />
+                    </Link>
                 </Button>
             </div>
 

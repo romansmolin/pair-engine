@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Header } from '@/widgets/header'
+import { Footer } from '@/widgets/footer'
 import { Providers } from './providers'
 import { Toaster } from '@/shared/ui/toaster'
 
@@ -23,6 +24,7 @@ export default function RootLayout({
                     <main className="flex flex-1 flex-col space-y-12 sm:space-y-16 lg:space-y-20">
                         {children}
                     </main>
+                    <Footer />
                     <Toaster />
                 </Providers>
             </body>

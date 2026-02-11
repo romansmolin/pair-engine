@@ -40,3 +40,20 @@ export function setSessionCookies(response: NextResponse, input: SetSessionCooki
         response.cookies.set('dating_token_login', input.tokenLogin, options)
     }
 }
+
+export function clearSessionCookies(response: NextResponse): void {
+    const options = {
+        httpOnly: true,
+        sameSite: 'lax' as const,
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+        maxAge: 0,
+    }
+
+    response.cookies.set('dating_session_id', '', options)
+    response.cookies.set('dating_user_id', '', options)
+    response.cookies.set('dating_lang', '', options)
+    response.cookies.set('dating_token_login', '', options)
+    response.cookies.set('fotochat_session_id', '', options)
+    response.cookies.set('fotochat_user_id', '', options)
+}

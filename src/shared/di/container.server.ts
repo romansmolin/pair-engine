@@ -6,6 +6,9 @@ import {
     GetCurrentUserController,
     GetCurrentUserUseCase,
     PrismaUserRepository,
+    UserProfileController,
+    UserProfileRepository,
+    UserProfileService,
 } from '@/entities/user'
 import { ICreditRepository } from '@/entities/credit/api/server/interfaces/credit-repository.interface'
 import { PrismaCreditRepository } from '@/entities/credit/api/server/repositories/prisma-credit.repository'
@@ -26,6 +29,7 @@ import { SecureProcessorReturnController } from '@/entities/payment/api/server/c
 import { SecureProcessorWebhookController } from '@/entities/payment/api/server/controller/secure-processor-webhook.controller'
 import { DashboardController, DashboardRepository, DashboardService } from '@/entities/dashboard'
 import { MatchController, MatchRepository, MatchService } from '@/entities/match'
+import { ChatController, ChatRepository, ChatService } from '@/entities/chat'
 import { GiftController } from '@/entities/gift/api/server/controllers/gift.controller'
 import { GiftRepository } from '@/entities/gift/api/server/repositories/gift.repository'
 import { GiftService } from '@/entities/gift/api/server/services/gift.service'
@@ -39,6 +43,9 @@ export function initializeContainer(): void {
     container.bind<IUserRepository>(DI_TOKENS.UserRepository).to(PrismaUserRepository)
     container.bind<GetCurrentUserUseCase>(DI_TOKENS.GetCurrentUserUseCase).to(GetCurrentUserUseCase)
     container.bind(GetCurrentUserController).toSelf()
+    container.bind(UserProfileRepository).toSelf()
+    container.bind(UserProfileService).toSelf()
+    container.bind(UserProfileController).toSelf()
 
     // Credit entity bindings
     container.bind<ICreditRepository>('ICreditRepository').to(PrismaCreditRepository)
@@ -69,6 +76,11 @@ export function initializeContainer(): void {
     container.bind(MatchRepository).toSelf()
     container.bind(MatchService).toSelf()
     container.bind(MatchController).toSelf()
+
+    // Chat entity bindings
+    container.bind(ChatRepository).toSelf()
+    container.bind(ChatService).toSelf()
+    container.bind(ChatController).toSelf()
 
     // Gift entity bindings
     container.bind(GiftRepository).toSelf()
