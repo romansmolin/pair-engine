@@ -1,6 +1,7 @@
 import 'server-only'
 
 import { injectable } from 'inversify'
+import type { Prisma } from '@prisma/client'
 import { AppError } from '@/shared/errors/app-error'
 import { prisma } from '@/shared/lib/database/prisma'
 
@@ -91,7 +92,7 @@ export class GiftRepository {
     }
 
     async buyGiftTransactional(input: BuyGiftTransactionalInput): Promise<BuyGiftTransactionalResult> {
-        return prisma.$transaction(async (tx) => {
+        return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
             await tx.user_credits.upsert({
                 where: { userId: input.userId },
                 update: {
@@ -178,7 +179,7 @@ export class GiftRepository {
     }
 
     async sendGiftTransactional(input: SendGiftTransactionalInput): Promise<SendGiftTransactionalResult> {
-        return prisma.$transaction(async (tx) => {
+        return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
             const updateInventoryResult = await tx.gift_inventory.updateMany({
                 where: {
                     userId: input.senderUserId,
