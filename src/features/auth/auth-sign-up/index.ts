@@ -1,3 +1,5 @@
-export { SignUpForm } from './ui/sign-up-form'
 export { signUpSchema } from './contracts/sign-up.dto'
 export type { SignUpDto } from './contracts/sign-up.dto'
+export { useSignUpMutation } from './api/client/endpoints'
+export { signUp } from './api/client/services/sign-up.service'
+export type { SignUpResponse } from './api/client/services/sign-up.service'

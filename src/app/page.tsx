@@ -1,5 +1,25 @@
-import { HomePage } from '@/views/home-page'
+import { BenefitsSplit } from '@/components/landing/BenefitsSplit'
+import { FeatureBlock } from '@/components/landing/FeatureBlock'
+import { FinalCTA } from '@/components/landing/FinalCTA'
+import { Footer } from '@/components/landing/Footer'
+import { Hero } from '@/components/landing/Hero'
+import { Integrations } from '@/components/landing/Integrations'
+import { LandingSignupSection } from '@/components/landing/LandingSignupSection'
+import { Navbar } from '@/components/landing/Navbar'
 
 export default function Home() {
-    return <HomePage />
+    return (
+        <>
+            <Navbar />
+            <main className="bg-[#F0FFDF] text-[#2A2A2A]">
+                <Hero />
+                <LandingSignupSection />
+                <FeatureBlock />
+                <BenefitsSplit />
+                <Integrations />
+                <FinalCTA />
+            </main>
+            <Footer />
+        </>
+    )
 }

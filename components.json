@@ -15,9 +15,10 @@
     "aliases": {
         "components": "@/shared/components",
         "utils": "@/shared/lib/css/utils",
-        "ui": "@/shared/ui",
+        "ui": "@/components/ui",
         "lib": "@/shared/lib",
-        "hooks": "@/shared/hooks"
+        "hooks": "@/shared/hooks",
+        "magicui": "@/components/magicui"
     },
     "registries": {}
 }
