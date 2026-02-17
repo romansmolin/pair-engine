@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { FooterBankingInfo } from '@/components/landing/FooterBankingInfo'
 
 const footerCols = [
     {
@@ -53,6 +54,12 @@ export function Footer() {
                         </ul>
                     </div>
                 ))}
+            </div>
+
+            <div className="border-t border-[#FFD8DF]/70">
+                <div className="mx-auto w-full max-w-6xl px-4 py-5 sm:px-6 lg:px-8">
+                    <FooterBankingInfo className="h-auto w-full max-w-3xl" />
+                </div>
             </div>
 
             <div className="border-t border-[#FFD8DF]">
